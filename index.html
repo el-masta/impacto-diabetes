@@ -33,12 +33,12 @@
             <form class="row g-3">
 
               <!-- Edad + Sexo -->
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12 col-md-6">
                 <label class="form-label">Edad</label>
                 <input type="number" v-model="edad" min="15" class="form-control form-control-sm" />
               </div>
 
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12 col-md-6">
                 <label class="form-label">Sexo biológico</label>
                 <select v-model="sexo" class="form-select form-select-sm">
                   <option value="masculino">Masculino</option>
@@ -47,7 +47,7 @@
               </div>
 
               <!-- Peso actual + Peso meta -->
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12 col-md-6">
                 <label class="form-label">Peso actual</label>
                 <div class="input-group input-group-sm">
                   <input type="number" v-model="pesoActual" min="30" class="form-control" />
@@ -55,7 +55,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12 col-md-6">
                 <label class="form-label">Peso meta</label>
                 <div class="input-group input-group-sm">
                   <input type="number" v-model="pesoMeta" :min="Math.max(30, pesoActual * 0.5)" :max="pesoActual"
@@ -75,16 +75,14 @@
                 </select>
               </div>
 
-              <div class="col-12 form-group">
+              <div class="col-12">
                 <label class="form-label">Mejora proyectada en actividad física (%)</label>
                 <input type="range" v-model="mejoraActividad" min="0" max="100" class="form-range" />
-                <div class="small">{{ mejoraActividad }}%</div>
-                <div class="small text-muted">Incremento estimado en actividad física respecto a tu situación actual.
-                </div>
+                <div class="small text-muted fst-italic">{{ mejoraActividad }}% · {{ actividadMejoraTexto }} </div>
               </div>
 
               <!-- Alimentación actual + mejora -->
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12 form-group">
                 <label class="form-label">Alimentación actual</label>
                 <select v-model="dietaActual" class="form-select form-select-sm">
                   <option value="muy deficiente">Muy deficiente</option>
@@ -95,12 +93,10 @@
                 </select>
               </div>
 
-              <div class="col-12 col-md-6 form-group">
+              <div class="col-12">
                 <label class="form-label">Mejora proyectada en alimentación (%)</label>
                 <input type="range" v-model="mejoraDieta" min="0" max="100" class="form-range" />
-                <div class="small">{{ mejoraDieta }}%</div>
-                <div class="small text-muted">Mejora estimada en la calidad de tu alimentación respecto a la situación
-                  actual.</div>
+                <div class="small text-muted fst-italic">{{ mejoraDieta }}% · {{ dietaMejoraTexto }} </div>
               </div>
 
               <!-- HbA1c -->
@@ -124,87 +120,127 @@
         <div class="card shadow-sm h-100 flex-fill">
           <div class="card-body d-flex flex-column">
             <h2 class="h5 mb-3">Resultados proyectados</h2>
-            <p class="output-p">
-              <strong>HbA1c proyectada: </strong>
-              <span class="badge badge-output bg-secondary" :class="{ 'bg-warning': hba1cReducida < 5.0 }">
-                {{ hba1cReducida }}%
-              </span>
-            </p>
-            <p class="disclaimer">
-              La HbA1c refleja el promedio de glucosa en sangre de los últimos 2-3 meses. Reducirla mejora el control de
-              la diabetes y disminuye el riesgo de complicaciones.
-            </p>
-
-            <p class="output-p">
-              <strong>Probabilidad de reducción o suspensión de medicamentos: </strong>
-              <span class="badge badge-output" :class="{
-                'bg-success': probabilidadSuspensionMed === 'Alta',
-                'bg-warning': probabilidadSuspensionMed === 'Media',
-                'bg-secondary': probabilidadSuspensionMed === 'Baja'
-              }">
-                {{ probabilidadSuspensionMed }}
-              </span>
-            </p>
-            <p class="disclaimer">
-              Estimación cualitativa basada en la reducción proyectada de HbA1c. Una mayor reducción aumenta las
-              probabilidades de reducir dosis o suspender medicamentos, siempre bajo supervisión médica.
-            </p>
-
-            <p class="output-p">
-              <strong>Riesgo cardiovascular proyectado: </strong>
-              <span class="badge badge-output" :class="{
-                'bg-success': riesgoCardiovascular === 'Bajo',
-                'bg-warning': riesgoCardiovascular === 'Medio',
-                'bg-danger': riesgoCardiovascular === 'Alto'
-              }">
-                {{ riesgoCardiovascular }}
-              </span>
-            </p>
-            <p class="disclaimer">
-              Basado en los cambios proyectados en actividad física y alimentación. Un riesgo cardiovascular más bajo se
-              asocia con menor probabilidad de eventos como infartos o accidentes cerebrovasculares.
-            </p>
-
-            <p class="output-p">
-              <strong>Reducción estimada en riesgo de complicaciones microvasculares: </strong>
-              <span class="badge badge-output bg-secondary">{{ riesgoMicrovasc }}%</span>
-            </p>
-            <p class="disclaimer">
-              Una reducción sostenida de HbA1c disminuye el riesgo de complicaciones en ojos, riñones y nervios. El
-              valor mostrado es una estimación basada en datos de estudios clínicos.
-            </p>
-
-            <p class="output-p">
-              <strong>Tiempo estimado para observar beneficio clínico: </strong>
-              <span class="badge badge-output bg-secondary">{{ tiempoBeneficio }}</span>
-            </p>
-            <p class="disclaimer">
-              Los beneficios del control glucémico y cardiovascular suelen aparecer tras 3 a 6 meses de cambios
-              sostenidos en estilo de vida y tratamiento.
-            </p>
-
-            <p class="output-p">
-              <strong>Probabilidad estimada de remisión parcial: </strong>
-              <span class="badge badge-output" :class="{
-                'bg-success': probabilidadRemision === 'Muy posible',
-                'bg-primary': probabilidadRemision === 'Posible',
-                'bg-secondary': probabilidadRemision === 'Poco probable',
-                'bg-danger': probabilidadRemision === 'Improbable'
-              }">
-                {{ probabilidadRemision }}
-              </span>
-            </p>
-            <p class="disclaimer">
-              La remisión parcial de la diabetes tipo 2 es posible con una pérdida significativa de peso y un buen
-              control glucémico. Este cálculo es orientativo y no garantiza resultados individuales.
-            </p>
-
-
+            <strong>HbA1c proyectada a futuro</strong>
             <!-- Gráfico dentro de Outputs -->
-            <h2 class="section-title">Comparación visual de HbA1c</h2>
-            <div class="border rounded p-2 bg-white flex-grow-1" style="padding: 1rem;">
+            <div class="border rounded p-2 bg-white flex-grow-1">
               <canvas ref="hba1cCanvas" width="400" height="200"></canvas>
             </div>
+            <div class="alert alert-info mt-3 mb-0 p-1 text-center" role="alert">
+              Tu HbA1c proyectado es <span class="fw-bold text-primary">
+                {{ hba1cReducida }}%
+              </span> <span class="badge badge-output" :class="{
+                  'bg-secondary': hba1cText === 'Bajo',
+                  'bg-success': hba1cText === 'Normal' || hba1cText === 'Control bueno',
+                  'bg-warning': hba1cText === 'Prediabetes' || hba1cText === 'Control intermedio',
+                  'bg-danger': hba1cText === 'Control pobre'
+                }">
+                {{ hba1cText }}
+              </span>
+              <div class="small mt-2 text-muted">
+                <template v-if="hba1cText === 'Bajo'">Puede indicar riesgo de hipoglucemia. Consultar con el médico.</template>
+                <template v-else-if="hba1cText === 'Normal'">Control óptimo, sin indicios de diabetes.</template>
+                <template v-else-if="hba1cText === 'Prediabetes'">Riesgo aumentado de diabetes. Intervenir con cambios de estilo de vida.</template>
+                <template v-else-if="hba1cText === 'Control bueno'">Objetivo recomendado para la mayoría de personas con diabetes tipo 2.</template>
+                <template v-else-if="hba1cText === 'Control intermedio'">Aún se requiere mejor control. Riesgo moderado de complicaciones.</template>
+                <template v-else-if="hba1cText === 'Control pobre'">Control insuficiente. Alto riesgo de complicaciones. Urge mejorar el manejo.</template>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <!-- Columna 1 -->
+              <div class="col-md-6">
+                <div class="p-3 bg-white">
+                  <p class="output-p">Probabilidad de reducción de medicamentos</p>
+                  <div class="mb-2 fs-6 fw-bold">{{ probabilidadSuspensionMed }}</div>
+
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="flex-grow-1 segment"
+                      :class="{ 'active bg-danger': probabilidadSuspensionMed === 'Baja' }"></div>
+                    <div class="flex-grow-1 segment mx-1"
+                      :class="{ 'active bg-warning': probabilidadSuspensionMed === 'Media' }"></div>
+                    <div class="flex-grow-1 segment"
+                      :class="{ 'active bg-success': probabilidadSuspensionMed === 'Alta' }"></div>
+                  </div>
+
+                  <div class="d-flex justify-content-between small text-muted">
+                    <div>Baja</div>
+                    <div>Media</div>
+                    <div>Alta</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna 2 -->
+              <div class="col-md-6">
+                <div class="p-3 bg-white">
+                  <p class="output-p">Riesgo cardiovascular proyectado</p>
+                  <div class="mb-2 fs-6 fw-bold">{{ riesgoCardiovascular }}</div>
+
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="flex-grow-1 segment" :class="{ 'active bg-success': riesgoCardiovascular === 'Bajo' }">
+                    </div>
+                    <div class="flex-grow-1 segment mx-1"
+                      :class="{ 'active bg-warning': riesgoCardiovascular === 'Medio' }"></div>
+                    <div class="flex-grow-1 segment" :class="{ 'active bg-danger': riesgoCardiovascular === 'Alto' }">
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between small text-muted">
+                    <div>Bajo</div>
+                    <div>Medio</div>
+                    <div>Alto</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-12">
+                <div class="p-3 bg-white">
+                  <p class="output-p">Probabilidad estimada de remisión parcial</p>
+                  <div class="mb-2 fs-6 fw-bold">{{ probabilidadRemision }}</div>
+
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="flex-grow-1 segment"
+                      :class="{ 'active bg-danger': probabilidadRemision === 'Improbable' }"></div>
+                    <div class="flex-grow-1 segment mx-1"
+                      :class="{ 'active bg-secondary': probabilidadRemision === 'Poco probable' }"></div>
+                    <div class="flex-grow-1 segment"
+                      :class="{ 'active bg-primary': probabilidadRemision === 'Posible' }"></div>
+                    <div class="flex-grow-1 segment"
+                      :class="{ 'active bg-success': probabilidadRemision === 'Muy posible' }"></div>
+                  </div>
+
+                  <div class="d-flex justify-content-between small text-muted">
+                    <div>Improbable</div>
+                    <div>Poco probable</div>
+                    <div>Posible</div>
+                    <div>Muy posible</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 bg-white">
+                  <p class="output-p">Reducción estimada en riesgo de complicaciones microvasculares</p>
+                  <div class="mb-2 fs-6 fw-bold">{{ riesgoMicrovasc }}%</div>
+
+                  <div class="d-flex align-items-center mb-1 progress-bar-container">
+                    <div class="progress-bar-fill bg-success" :style="{ width: riesgoMicrovasc + '%' }"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="p-3 bg-white">
+                  <p class="output-p">Tiempo estimado para observar beneficio clínico</p>
+                  <div class="mb-2 fs-6 fw-bold">{{ tiempoBeneficio }}</div>
+                </div>
+              </div>
+            </div>
+
             <p class="disclaimer">
               Esta aplicación proporciona estimaciones orientativas basadas en evidencia científica, destinadas a apoyar
               la educación en diabetes tipo 2.
@@ -237,38 +273,71 @@
       </div>
 
       <!-- Card de tutorial de interpretación -->
-<div class="col-12">
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h2 class="h5 mb-3 text-center">
-        <button type="button" class="btn btn-outline-primary btn-sm mb-3" @click="mostrarInterpretacion = !mostrarInterpretacion">
-          {{ mostrarInterpretacion ? 'Ocultar explicaciónes' : 'Mostrar guía para interpretar los resultados' }}
-        </button>
-      </h2>
+      <div class="col-12">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h2 class="h5 mb-3 text-center">
+              <button type="button" class="btn btn-outline-primary btn-sm mb-3"
+              @click="mostrarInterpretacion = !mostrarInterpretacion">
+              <i class="fas fa-info-circle me-1"></i>
+              {{ mostrarInterpretacion ? 'Ocultar explicaciones' : 'Mostrar guía para interpretar los resultados' }}
+            </button>
+            
+            </h2>
 
-      <transition name="fade">
-        <div v-if="mostrarInterpretacion" class="interpretacion-text">
-          <p><strong>Esta herramienta te muestra estimaciones orientativas sobre cómo ciertos cambios en tu estilo de vida podrían mejorar tu salud si tienes diabetes tipo 2.</strong> El objetivo es ayudarte a conocer los beneficios de adoptar hábitos más saludables. Los resultados no son exactos ni garantizan un resultado individual, pero pueden servirte como guía para tomar mejores decisiones junto con tu médico.</p>
-        
-          <p><strong>HbA1c proyectada:</strong><br> La HbA1c es un número que refleja el promedio de azúcar (glucosa) en tu sangre en los últimos 2 a 3 meses. Cuanto más bajo sea este número, mejor será el control de tu diabetes. Por lo general, un valor menor a 7% se considera adecuado, aunque el objetivo específico puede variar en cada persona. Reducir tu HbA1c disminuye el riesgo de complicaciones a largo plazo.</p>
-        
-          <p><strong>Probabilidad de reducción o suspensión de medicamentos:</strong><br> Si logras una reducción significativa de tu HbA1c, es posible que tu médico valore la opción de reducir la dosis de tus medicamentos o incluso suspender algunos de ellos. Este cálculo es orientativo; siempre es tu médico quien debe decidir cualquier cambio en el tratamiento.</p>
-        
-          <p><strong>Riesgo cardiovascular proyectado:</strong><br> El riesgo cardiovascular hace referencia a la probabilidad de sufrir enfermedades del corazón o de los vasos sanguíneos, como un infarto o un accidente cerebrovascular. Mantener una buena alimentación, realizar actividad física regularmente y controlar bien tu glucosa contribuyen a reducir este riesgo. La herramienta te muestra cómo los cambios en tu estilo de vida pueden influir en este aspecto.</p>
-        
-          <p><strong>Reducción estimada en el riesgo de complicaciones microvasculares:</strong><br> Las complicaciones microvasculares afectan a los pequeños vasos sanguíneos, y pueden dañar órganos como los ojos (retinopatía), los riñones (nefropatía) y los nervios (neuropatía). Una reducción de la HbA1c ayuda a disminuir el riesgo de que estas complicaciones aparezcan o progresen. La estimación mostrada es aproximada y se basa en estudios clínicos reconocidos.</p>
-        
-          <p><strong>Tiempo estimado para observar beneficio clínico:</strong><br> Los beneficios de los cambios en el estilo de vida no son inmediatos. Según el nivel de los cambios realizados (pérdida de peso, mejora de la alimentación, aumento de la actividad física), podrías empezar a notar mejoras en tu salud entre 3 y 6 meses después de mantener esos hábitos de forma constante. La perseverancia es lo que mas te ayudará.</p>
-        
-          <p><strong>Probabilidad estimada de remisión parcial:</strong><br> La remisión parcial significa que tu diabetes tipo 2 podría entrar en una fase en la que tu glucosa esté controlada sin necesidad de medicamentos, o con una medicación mínima. Esto es más probable si logras una pérdida importante de peso y mejoras de forma significativa tu alimentación y tu actividad física. No todos los casos lo consiguen, pero cualquier mejora en los hábitos aporta beneficios importantes para tu salud.</p>
-        
-          <p class="text-danger"><strong>Importante:</strong><br> Esta herramienta no reemplaza el consejo médico profesional.<br>Los resultados que muestra son orientativos y deben ser interpretados siempre junto con tu médico.<br>Nunca realices cambios en tu tratamiento por tu propia cuenta.<br>Consulta siempre con tu médico o profesional sanitario de referencia.</p>
+            <transition name="fade">
+              <div v-if="mostrarInterpretacion" class="interpretacion-text">
+                <p><strong>Esta herramienta te muestra estimaciones orientativas sobre cómo ciertos cambios en tu estilo
+                    de vida podrían mejorar tu salud si tienes diabetes tipo 2.</strong> El objetivo es ayudarte a
+                  conocer los beneficios de adoptar hábitos más saludables. Los resultados no son exactos ni garantizan
+                  un resultado individual, pero pueden servirte como guía para tomar mejores decisiones junto con tu
+                  médico.</p>
+
+                <p><strong>HbA1c proyectada:</strong><br> La HbA1c es un número que refleja el promedio de azúcar
+                  (glucosa) en tu sangre en los últimos 2 a 3 meses. Cuanto más bajo sea este número, mejor será el
+                  control de tu diabetes. Por lo general, un valor menor a 7% se considera adecuado, aunque el objetivo
+                  específico puede variar en cada persona. Reducir tu HbA1c disminuye el riesgo de complicaciones a
+                  largo plazo.</p>
+
+                <p><strong>Probabilidad de reducción o suspensión de medicamentos:</strong><br> Si logras una reducción
+                  significativa de tu HbA1c, es posible que tu médico valore la opción de reducir la dosis de tus
+                  medicamentos o incluso suspender algunos de ellos. Este cálculo es orientativo; siempre es tu médico
+                  quien debe decidir cualquier cambio en el tratamiento.</p>
+
+                <p><strong>Riesgo cardiovascular proyectado:</strong><br> El riesgo cardiovascular hace referencia a la
+                  probabilidad de sufrir enfermedades del corazón o de los vasos sanguíneos, como un infarto o un
+                  accidente cerebrovascular. Mantener una buena alimentación, realizar actividad física regularmente y
+                  controlar bien tu glucosa contribuyen a reducir este riesgo. La herramienta te muestra cómo los
+                  cambios en tu estilo de vida pueden influir en este aspecto.</p>
+
+                <p><strong>Reducción estimada en el riesgo de complicaciones microvasculares:</strong><br> Las
+                  complicaciones microvasculares afectan a los pequeños vasos sanguíneos, y pueden dañar órganos como
+                  los ojos (retinopatía), los riñones (nefropatía) y los nervios (neuropatía). Una reducción de la HbA1c
+                  ayuda a disminuir el riesgo de que estas complicaciones aparezcan o progresen. La estimación mostrada
+                  es aproximada y se basa en estudios clínicos reconocidos.</p>
+
+                <p><strong>Tiempo estimado para observar beneficio clínico:</strong><br> Los beneficios de los cambios
+                  en el estilo de vida no son inmediatos. Según el nivel de los cambios realizados (pérdida de peso,
+                  mejora de la alimentación, aumento de la actividad física), podrías empezar a notar mejoras en tu
+                  salud entre 3 y 6 meses después de mantener esos hábitos de forma constante. La perseverancia es lo
+                  que mas te ayudará.</p>
+
+                <p><strong>Probabilidad estimada de remisión parcial:</strong><br> La remisión parcial significa que tu
+                  diabetes tipo 2 podría entrar en una fase en la que tu glucosa esté controlada sin necesidad de
+                  medicamentos, o con una medicación mínima. Esto es más probable si logras una pérdida importante de
+                  peso y mejoras de forma significativa tu alimentación y tu actividad física. No todos los casos lo
+                  consiguen, pero cualquier mejora en los hábitos aporta beneficios importantes para tu salud.</p>
+
+                <p class="text-danger"><strong>Importante:</strong><br> Esta herramienta no reemplaza el consejo médico
+                  profesional.<br>Los resultados que muestra son orientativos y deben ser interpretados siempre junto
+                  con tu médico.<br>Nunca realices cambios en tu tratamiento por tu propia cuenta.<br>Consulta siempre
+                  con tu médico o profesional sanitario de referencia.</p>
+              </div>
+
+            </transition>
+          </div>
         </div>
-        
-      </transition>
-    </div>
-  </div>
-</div>
+      </div>
 
     </div>
   </div>

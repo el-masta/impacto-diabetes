@@ -79,6 +79,7 @@ legend {
   margin-top: 0;
   margin-block-end: 0;
   margin-block-start: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -99,6 +100,35 @@ legend {
   line-height: 1.5;
   color: #444;
 }
+
+.segment {
+  height: 8px;
+  border-radius: 999px;
+  background-color: #e0e0e0; /* gris claro cuando inactivo */
+  transition: background-color 0.3s ease;
+}
+
+.segment.active {
+  background-color: currentColor; /* usará el color de bg-success, bg-warning, bg-danger */
+  height: 12px;
+}
+
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0; /* gris claro fondo */
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 999px;
+}
+
+
 
 
 @media (min-width: 1400px) {
