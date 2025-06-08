@@ -1,0 +1,109 @@
+/* Ajuste general */
+body {
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+}
+
+/* Separación entre grupos de inputs */
+.form-group {
+  border-top: 1px solid #dee2e6;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem; /* añadido para uniformidad */
+  margin-top: 0.75rem;
+}
+
+/* Labels de form armonizados */
+.form-label {
+  font-weight: 500;
+  font-size: 0.85rem; /* armonizar con resto */
+  color: #333;
+}
+
+/* Compactar controls */
+.form-control-sm,
+.form-select-sm {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+}
+
+/* Espacio extra en sliders */
+input[type="range"] {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem; /* añadido para airear */
+}
+
+/* Fieldset (opcional) para agrupaciones */
+fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+legend {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Outputs - jerarquía */
+.card-body .section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Badge en Outputs */
+.badge-output {
+  padding: 0.4em 0.6em;
+  border-radius: 0.5rem;
+}
+
+/* Disclaimer */
+.disclaimer {
+  font-size: 0.60rem;
+  color: #555;
+  margin-top: .25rem;
+  margin-bottom: 0;
+}
+
+/* Text warning */
+.text-warning {
+  color: #fd7e14 !important;
+  /* naranja Bootstrap */
+}
+
+.output-p {
+  margin-top: 0;
+  margin-block-end: 0;
+  margin-block-start: 0.75rem;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
+}
+
+
+.interpretacion-text {
+  font-size: 1rem; /* ≈ 30% más grande que 0.9rem base */
+  line-height: 1.5;
+  color: #444;
+}
+
+
+@media (min-width: 1400px) {
+  .card-body {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+}
