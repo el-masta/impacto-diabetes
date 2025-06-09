@@ -35,7 +35,10 @@
               <!-- Edad + Sexo -->
               <div class="col-12 col-md-6">
                 <label class="form-label">Edad</label>
-                <input type="number" v-model="edad" min="15" class="form-control form-control-sm" />
+                <div class="input-group input-group-sm">
+                  <input type="number" v-model="edad" min="15" class="form-control form-control-sm" />
+                  <span class="input-group-text">años</span>
+                </div>
               </div>
 
               <div class="col-12 col-md-6">
@@ -137,12 +140,19 @@
                 {{ hba1cText }}
               </span>
               <div class="small mt-2 text-muted">
-                <template v-if="hba1cText === 'Bajo'">Puede indicar riesgo de hipoglucemia. Consultar con el médico.</template>
+                <template v-if="hba1cText === 'Bajo'">Puede indicar riesgo de hipoglucemia. Consultar con el
+                  médico.</template>
                 <template v-else-if="hba1cText === 'Normal'">Control óptimo, sin indicios de diabetes.</template>
-                <template v-else-if="hba1cText === 'Prediabetes'">Riesgo aumentado de diabetes. Intervenir con cambios de estilo de vida.</template>
-                <template v-else-if="hba1cText === 'Control bueno'">Objetivo recomendado para la mayoría de personas con diabetes tipo 2.</template>
-                <template v-else-if="hba1cText === 'Control intermedio'">Aún se requiere mejor control. Riesgo moderado de complicaciones.</template>
-                <template v-else-if="hba1cText === 'Control pobre'">Control insuficiente. Alto riesgo de complicaciones. Urge mejorar el manejo.</template>
+                <template v-else-if="hba1cText === 'Prediabetes'">Riesgo aumentado de diabetes. Intervenir con cambios
+                  de
+                  estilo de vida.</template>
+                <template v-else-if="hba1cText === 'Control bueno'">Objetivo recomendado para la mayoría de personas con
+                  diabetes tipo 2.</template>
+                <template v-else-if="hba1cText === 'Control intermedio'">Aún se requiere mejor control. Riesgo moderado
+                  de
+                  complicaciones.</template>
+                <template v-else-if="hba1cText === 'Control pobre'">Control insuficiente. Alto riesgo de complicaciones.
+                  Urge mejorar el manejo.</template>
               </div>
             </div>
 
@@ -206,7 +216,8 @@
                     <div class="flex-grow-1 segment mx-1"
                       :class="{ 'active bg-secondary': probabilidadRemision === 'Poco probable' }"></div>
                     <div class="flex-grow-1 segment"
-                      :class="{ 'active bg-primary': probabilidadRemision === 'Posible' }"></div>
+                      :class="{ 'active bg-primary': probabilidadRemision === 'Posible' }">
+                    </div>
                     <div class="flex-grow-1 segment"
                       :class="{ 'active bg-success': probabilidadRemision === 'Muy posible' }"></div>
                   </div>
@@ -241,31 +252,34 @@
               </div>
             </div>
 
-            <p class="disclaimer">
-              Esta aplicación proporciona estimaciones orientativas basadas en evidencia científica, destinadas a apoyar
-              la educación en diabetes tipo 2.
-            </p>
-            <p class="disclaimer text-danger">
-              Los resultados no sustituyen el consejo médico profesional. Para decisiones relacionadas con su
-              tratamiento, consulte siempre a su médico.
-            </p>
-            <p class="disclaimer small text-muted">
-              Fuentes:
-              </br>
-              <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(17)33102-1/abstract"
-                target="_blank" rel="nofollow">Lean MEJ et al. (2018, The Lancet)</a>
-              </br>
-              <a href="https://doi.org/10.2337/dc16-1728" target="_blank" rel="nofollow">Colberg SR et al. (2016,
-                Diabetes Care)</a>
-              </br>
-              <a href="https://doi.org/10.7326/0003-4819-151-5-200909010-00004" target="_blank" rel="nofollow">Esposito
-                K et al. (2009, Annals of Internal Medicine)</a>
-              </br>
-              <a href="https://doi.org/10.1016/S0140-6736(98)07019-6" target="_blank" rel="nofollow">UKPDS Group (1998,
-                The Lancet)</a>
-
-
-            </p>
+            <div class="alert alert-warning small" role="alert">
+              <p class="disclaimer">
+                Esta aplicación proporciona estimaciones orientativas basadas en evidencia científica, destinadas a
+                apoyar
+                la educación en diabetes tipo 2.
+              </p>
+              <p class="disclaimer text-danger">
+                Los resultados no sustituyen el consejo médico profesional. Para decisiones relacionadas con su
+                tratamiento, consulte siempre a su médico.
+              </p>
+              <p class="disclaimer small text-muted">
+                Fuentes:
+                </br>
+                <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(17)33102-1/abstract"
+                  target="_blank" rel="nofollow">Lean MEJ et al. (2018, The Lancet)</a>
+                </br>
+                <a href="https://doi.org/10.2337/dc16-1728" target="_blank" rel="nofollow">Colberg SR et al. (2016,
+                  Diabetes Care)</a>
+                </br>
+                <a href="https://doi.org/10.7326/0003-4819-151-5-200909010-00004" target="_blank"
+                  rel="nofollow">Esposito
+                  K et al. (2009, Annals of Internal Medicine)</a>
+                </br>
+                <a href="https://doi.org/10.1016/S0140-6736(98)07019-6" target="_blank" rel="nofollow">UKPDS Group
+                  (1998,
+                  The Lancet)</a>
+              </p>
+            </div>
 
 
           </div>
@@ -278,11 +292,11 @@
           <div class="card-body">
             <h2 class="h5 mb-3 text-center">
               <button type="button" class="btn btn-outline-primary btn-sm mb-3"
-              @click="mostrarInterpretacion = !mostrarInterpretacion">
-              <i class="fas fa-info-circle me-1"></i>
-              {{ mostrarInterpretacion ? 'Ocultar explicaciones' : 'Mostrar guía para interpretar los resultados' }}
-            </button>
-            
+                @click="mostrarInterpretacion = !mostrarInterpretacion">
+                <i class="fas fa-info-circle me-1"></i>
+                {{ mostrarInterpretacion ? 'Ocultar explicaciones' : 'Mostrar guía para interpretar los resultados' }}
+              </button>
+
             </h2>
 
             <transition name="fade">
